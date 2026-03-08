@@ -1,9 +1,39 @@
 import os
 import math
+# conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+# conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+# conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+# conda config --set show_channel_urls yes
+
+# pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+# pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
+
+# conda许可证报错问题解决，不用conda service 下面好像不行，可以用后续的
+# conda config --remove-key channels
+# conda config --add channels conda-forge
+# conda config --add channels pytorch
+# conda config --add channels nvidia
+
+# conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+# conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+# conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/msys2
+
+# conda create -n birefnet python=3.11 -y
 # conda activate birefnet   开启环境
+
+# 有 NVIDIA GPU（推荐，CUDA 12.4）
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+
+# 如果你是纯 CPU 环境：
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+# cd D:\project\BiRefNet
+# pip install -r requirements.txt
 
 # python .\inference.py --ckpt "D:\project\BiRefNet\ckpts\BiRefNet_dynamic-general-epoch_174.pth" --ckpt_folder "" --pred_root "D:\project\BiRefNet\output_images" --testsets "DIS-TE1" --resolution "None"
 # --resolution "1024x1024"
+# python .\inference.py --ckpt "D:\project\BiRefNet\ckpts\BiRefNet_dynamic-general-epoch_174.pth" --ckpt_folder "" --pred_root "D:\project\BiRefNet\output_images" --testsets "test" --resolution "None"
+
 # D:\project\BiRefNet\datasets\dis\DIS5K\<你的testset>\im
 # D:\project\BiRefNet\datasets\dis\DIS5K\<你的testset>\gt
 
