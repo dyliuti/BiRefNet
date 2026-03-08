@@ -1,11 +1,19 @@
 import os
 import math
+# conda activate birefnet   开启环境
 
+# python .\inference.py --ckpt "D:\project\BiRefNet\ckpts\BiRefNet_dynamic-general-epoch_174.pth" --ckpt_folder "" --pred_root "D:\project\BiRefNet\output_images" --testsets "DIS-TE1" --resolution "None"
+# --resolution "1024x1024"
+# D:\project\BiRefNet\datasets\dis\DIS5K\<你的testset>\im
+# D:\project\BiRefNet\datasets\dis\DIS5K\<你的testset>\gt
+
+# 将im中的图生成同尺寸黑图到gt目录下
+# python -c "from pathlib import Path; from PIL import Image; root=Path(r'D:\project\BiRefNet\datasets\dis\DIS5K\test'); im_dir=root/'im'; gt_dir=root/'gt'; gt_dir.mkdir(parents=True, exist_ok=True); exts={'.jpg','.jpeg','.png','.bmp','.webp','.tif','.tiff'}; [Image.new('L', Image.open(p).size, 0).save(gt_dir / (p.stem + '.png')) for p in im_dir.iterdir() if p.suffix.lower() in exts]"
 
 class Config():
     def __init__(self) -> None:
         # Main active settings
-        self.batch_size = 8                                     # Multi-GPU+BF16 training for 76GB / 62GB, without/with compile, on each A100.
+        self.batch_size = 2                                     # Multi-GPU+BF16 training for 76GB / 62GB, without/with compile, on each A100.
         self.compile = True                                     # 1. PyTorch<=2.0.1 has an inherent CPU memory leak problem; 2.0.1<PyTorch<2.5.0 cannot successfully compile.
         self.mixed_precision = ['no', 'fp16', 'bf16', 'fp8'][2] # 2. FP8 doesn't show acceleration in the torch.compile mode.
         self.SDPA_enabled = True                                # H200x1 + compile==True.  None: 43GB + 14s, math: 43GB + 15s, mem_eff: 35GB + 15s.
@@ -13,7 +21,8 @@ class Config():
 
         # PATH settings
         # Make up your file system as: SYS_HOME_DIR/codes/dis/BiRefNet, SYS_HOME_DIR/datasets/dis/xx, SYS_HOME_DIR/weights/xx
-        self.sys_home_dir = [os.path.expanduser('~'), '/workspace'][1]   # Default, custom
+        # self.sys_home_dir = [os.path.expanduser('~'), '/workspace'][1]   # Default, custom
+        self.sys_home_dir = r'D:\project\BiRefNet'
         self.data_root_dir = os.path.join(self.sys_home_dir, 'datasets/dis')
 
         # TASK settings
